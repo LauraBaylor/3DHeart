@@ -4,39 +4,56 @@
   <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   </script>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .hotspot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: gold;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
   <model-viewer
-  src="Heart.glb"
-  poster="poster.webp"
-  camera-controls
-  auto-rotate
-  autoplay
-  shadow-intensity="1"
-  style="width:100%; height:100vh;">
-  
-  <button
-  class="hotspot"
-  slot="hotspot-test"
-  data-position="0 1 0"
-  data-normal="0 1 0"
-  onclick="sendToStoryline('Aorta')">
-  1
-</button>
-    <style>
-.hotspot {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: gold;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-}
-</style>
-</model-viewer>
-</body>
+    src="Heart.glb"
+    poster="poster.webp"
+    camera-controls
+    auto-rotate
+    autoplay
+    shadow-intensity="1"
+    style="width:100%; height:100vh;">
 
+    <button
+      class="hotspot"
+      slot="hotspot-test"
+      data-position="0m 0m 0m"
+      data-normal="0m 1m 0m"
+      onclick="sendToStoryline('Aorta')">
+      1
+    </button>
+
+  </model-viewer>
+
+  <script>
+    function sendToStoryline(partName) {
+      window.parent.postMessage(
+        {
+          type: "heartHotspotClicked",
+          part: partName
+        },
+        "*"
+      );
+    }
+  </script>
+</body>
 </html>
